@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Timetable</title>
+    <style>
+        /* General Page Styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(to right, #1e3c72, #2a5298);
+            color: white;
+            text-align: center;
+        }
+
+        /* Form Container */
+        .container {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            margin: auto;
+            backdrop-filter: blur(8px);
+        }
+
+        h1, h2 {
+            font-weight: bold;
+        }
+
+        /* Form Elements */
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
+
+        select {
+            background: #fff;
+            color: #333;
+            box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Button Styling */
+        button {
+            background: #ff7e5f;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #feb47b;
+            transform: scale(1.05);
+        }
+
+        /* Table Styling */
+        .table-container {
+            margin: 30px auto;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(8px);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            color: black;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background: #568d62;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Generate Timetable</h1>
+    
+    <div class="container">
+        <form id="timetableForm">
+            <label for="faculty">Select Faculty:</label>
+            <select id="faculty" name="faculty" required>
+                <option value="">-- Select Faculty --</option>
+                <option value="Dr. Smith">Dr. Smith</option>
+                <option value="Prof. Johnson">Prof. Johnson</option>
+                <option value="Dr. Emily">Dr. Emily</option>
+            </select>
+            
+            <label for="course">Select Course:</label>
+            <select id="course" name="course" required>
+                <option value="">-- Select Course --</option>
+                <option value="Mathematics">Mathematics</option>
+                <option value="Physics">Physics</option>
+                <option value="Computer Science">Computer Science</option>
+            </select>
+            
+            <label for="classroom">Select Classroom:</label>
+            <select id="classroom" name="classroom" required>
+                <option value="">-- Select Classroom --</option>
+                <option value="Room 101">Room 101</option>
+                <option value="Room 202">Room 202</option>
+                <option value="Lab 3">Lab 3</option>
+            </select>
+            
+            <button type="submit">Generate Timetable</button>
+        </form>
+    </div>
+
+    <h2>Generated Timetable</h2>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Faculty</th>
+                    <th>Course</th>
+                    <th>Classroom</th>
+                    <th>Schedule</th>
+                </tr>
+            </thead>
+            <tbody id="timetableList">
+                <!-- Timetable entries will be dynamically inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.getElementById("timetableForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            // Get selected values
+            let faculty = document.getElementById("faculty").value;
+            let course = document.getElementById("course").value;
+            let classroom = document.getElementById("classroom").value;
+
+            if (!faculty || !course || !classroom) {
+                alert("Please select all fields!");
+                return;
+            }
+
+            // Generate random time slot
+            let times = ["9:00 AM - 10:00 AM", "11:00 AM - 12:00 PM", "2:00 PM - 3:00 PM"];
+            let randomTime = times[Math.floor(Math.random() * times.length)];
+
+            // Create new row
+            let tableRow = `
+                <tr>
+                    <td>${faculty}</td>
+                    <td>${course}</td>
+                    <td>${classroom}</td>
+                    <td>${randomTime}</td>
+                </tr>
+            `;
+
+            // Insert into table
+            document.getElementById("timetableList").innerHTML += tableRow;
+
+            // Clear selections after submission
+            document.getElementById("timetableForm").reset();
+        });
+    </script>
+
+</body>
+</html>
